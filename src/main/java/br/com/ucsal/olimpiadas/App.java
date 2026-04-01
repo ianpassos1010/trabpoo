@@ -2,8 +2,11 @@ package br.com.ucsal.olimpiadas;
 
 import br.com.ucsal.olimpiadas.menu.Comando;
 import br.com.ucsal.olimpiadas.services.participanteServices.AdicionarParticipante;
+import br.com.ucsal.olimpiadas.services.participanteServices.EscolherParticipante;
 import br.com.ucsal.olimpiadas.services.provaServices.AdicionarProva;
+import br.com.ucsal.olimpiadas.services.provaServices.EscolherProva;
 import br.com.ucsal.olimpiadas.services.questaoServices.AdicionarQuestao;
+import br.com.ucsal.olimpiadas.services.questaoServices.ImprimirTabuleiro;
 import br.com.ucsal.olimpiadas.services.tentativaServices.AplicarProva;
 import br.com.ucsal.olimpiadas.services.tentativaServices.CalcularNota;
 import br.com.ucsal.olimpiadas.services.tentativaServices.ICalcularNota;
@@ -32,15 +35,34 @@ public class App {
     public static void main(String[] args) {
         seed();
 
-        // Para trocar a estratégia de nota, basta substituir por new CalcularNotaComPenalidade()
         ICalcularNota calculadorNota = new CalcularNota();
 
         Map<String, Comando> comandos = new LinkedHashMap<>();
-        comandos.put("1", () -> new AdicionarParticipante(participantes, proximoParticipanteId, in).criarParticipante());
-        comandos.put("2", () -> new AdicionarProva(provas, proximaProvaId, in).criarProva());
-        comandos.put("3", () -> new AdicionarQuestao(questoes, provas, proximaQuestaoId, in).criarQuestao());
-        comandos.put("4", () -> new AplicarProva(tentativas, participantes, provas, questoes, proximaTentativaId, in, calculadorNota).aplicarProva());
-        comandos.put("5", () -> new ListarTentativas(tentativas, calculadorNota).listarTentativas());
+
+        comandos.put("1", () ->
+            new AdicionarParticipante(participantes, proximoParticipanteId, in)
+                .criarParticipante());
+
+        comandos.put("2", () ->
+            new AdicionarProva(provas, proximaProvaId, in)
+                .criarProva());
+
+        comandos.put("3", () ->
+            new AdicionarQuestao(questoes, provas, proximaQuestaoId, in,
+                new EscolherProva(provas, in))
+                .criarQuestao());
+
+        comandos.put("4", () ->
+            new AplicarProva(tentativas, participantes, provas, questoes, proximaTentativaId, in,
+                calculadorNota,
+                new EscolherParticipante(participantes, in),
+                new EscolherProva(provas, in),
+                new ImprimirTabuleiro())
+                .aplicarProva());
+
+        comandos.put("5", () ->
+            new ListarTentativas(tentativas, calculadorNota)
+                .listarTentativas());
 
         while (true) {
             System.out.println("\n=== OLIMPÍADA DE QUESTÕES (V1) ===");

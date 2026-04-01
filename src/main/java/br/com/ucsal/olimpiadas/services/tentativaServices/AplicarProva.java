@@ -5,35 +5,46 @@ import br.com.ucsal.olimpiadas.Prova;
 import br.com.ucsal.olimpiadas.Questao;
 import br.com.ucsal.olimpiadas.Resposta;
 import br.com.ucsal.olimpiadas.Tentativa;
-import br.com.ucsal.olimpiadas.services.participanteServices.EscolherParticipante;
-import br.com.ucsal.olimpiadas.services.provaServices.EscolherProva;
-import br.com.ucsal.olimpiadas.services.questaoServices.ImprimirTabuleiro;
+import br.com.ucsal.olimpiadas.services.participanteServices.IEscolherParticipante;
+import br.com.ucsal.olimpiadas.services.provaServices.IEscolherProva;
+import br.com.ucsal.olimpiadas.services.questaoServices.IImprimirTabuleiro;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class AplicarProva implements IAplicarProva {
 
-    private final List<Tentativa>    tentativas;
-    private final List<Participante> participantes;
-    private final List<Prova>        provas;
-    private final List<Questao>      questoes;
-    private final long[]             proximoId;
-    private final Scanner            in;
-    private final ICalcularNota      calculadorNota;
+    private final List<Tentativa>       tentativas;
+    private final List<Participante>    participantes;
+    private final List<Prova>           provas;
+    private final List<Questao>         questoes;
+    private final long[]                proximoId;
+    private final Scanner               in;
+    private final ICalcularNota         calculadorNota;
+    private final IEscolherParticipante escolherParticipante;
+    private final IEscolherProva        escolherProva;
+    private final IImprimirTabuleiro    imprimirTabuleiro;
 
     public AplicarProva(List<Tentativa> tentativas, List<Participante> participantes,
                         List<Prova> provas, List<Questao> questoes,
-                        long[] proximoId, Scanner in, ICalcularNota calculadorNota) {
-        this.tentativas     = tentativas;
-        this.participantes  = participantes;
-        this.provas         = provas;
-        this.questoes       = questoes;
-        this.proximoId      = proximoId;
-        this.in             = in;
-        this.calculadorNota = calculadorNota;
+                        long[] proximoId, Scanner in,
+                        ICalcularNota calculadorNota,
+                        IEscolherParticipante escolherParticipante,
+                        IEscolherProva escolherProva,
+                        IImprimirTabuleiro imprimirTabuleiro) {
+        this.tentativas          = tentativas;
+        this.participantes       = participantes;
+        this.provas              = provas;
+        this.questoes            = questoes;
+        this.proximoId           = proximoId;
+        this.in                  = in;
+        this.calculadorNota      = calculadorNota;
+        this.escolherParticipante = escolherParticipante;
+        this.escolherProva       = escolherProva;
+        this.imprimirTabuleiro   = imprimirTabuleiro;
     }
 
+    @Override
     public void aplicarProva() {
         if (participantes.isEmpty()) {
             System.out.println("cadastre participantes primeiro");
@@ -44,11 +55,11 @@ public class AplicarProva implements IAplicarProva {
             return;
         }
 
-        var participanteId = new EscolherParticipante(participantes, in).escolherParticipante();
+        var participanteId = escolherParticipante.escolherParticipante();
         if (participanteId == null)
             return;
 
-        var provaId = new EscolherProva(provas, in).escolherProva();
+        var provaId = escolherProva.escolherProva();
         if (provaId == null)
             return;
 
@@ -71,7 +82,7 @@ public class AplicarProva implements IAplicarProva {
             System.out.println(q.getEnunciado());
 
             System.out.println("Posição inicial:");
-            new ImprimirTabuleiro().imprimirTabuleiroFen(q.getFenInicial());
+            imprimirTabuleiro.imprimirTabuleiroFen(q.getFenInicial());
 
             for (var alt : q.getAlternativas()) {
                 System.out.println(alt);

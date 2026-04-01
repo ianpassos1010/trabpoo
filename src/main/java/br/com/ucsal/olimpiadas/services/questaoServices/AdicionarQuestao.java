@@ -2,32 +2,37 @@ package br.com.ucsal.olimpiadas.services.questaoServices;
 
 import br.com.ucsal.olimpiadas.Prova;
 import br.com.ucsal.olimpiadas.Questao;
-import br.com.ucsal.olimpiadas.services.provaServices.EscolherProva;
+import br.com.ucsal.olimpiadas.services.provaServices.IEscolherProva;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class AdicionarQuestao implements IAdicionarQuestao {
 
-    private final List<Questao> questoes;
-    private final List<Prova> provas;
-    private final long[] proximoId;
-    private final Scanner in;
+    private final List<Questao>  questoes;
+    private final List<Prova>    provas;
+    private final long[]         proximoId;
+    private final Scanner        in;
+    private final IEscolherProva escolherProva;
 
-    public AdicionarQuestao(List<Questao> questoes, List<Prova> provas, long[] proximoId, Scanner in) {
-        this.questoes = questoes;
-        this.provas = provas;
-        this.proximoId = proximoId;
-        this.in = in;
+    public AdicionarQuestao(List<Questao> questoes, List<Prova> provas,
+                            long[] proximoId, Scanner in,
+                            IEscolherProva escolherProva) {
+        this.questoes      = questoes;
+        this.provas        = provas;
+        this.proximoId     = proximoId;
+        this.in            = in;
+        this.escolherProva = escolherProva;
     }
 
+    @Override
     public void criarQuestao() {
         if (provas.isEmpty()) {
             System.out.println("não há provas cadastradas");
             return;
         }
 
-        var provaId = new EscolherProva(provas, in).escolherProva();
+        var provaId = escolherProva.escolherProva();
         if (provaId == null)
             return;
 
