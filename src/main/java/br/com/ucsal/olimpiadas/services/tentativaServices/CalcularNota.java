@@ -2,8 +2,9 @@ package br.com.ucsal.olimpiadas.services.tentativaServices;
 
 import br.com.ucsal.olimpiadas.Tentativa;
 
-public class CalcularNota {
+public class CalcularNota implements ICalcularNota {
 
+    @Override
     public int calcularNota(Tentativa tentativa) {
         int acertos = 0;
         for (var r : tentativa.getRespostas()) {

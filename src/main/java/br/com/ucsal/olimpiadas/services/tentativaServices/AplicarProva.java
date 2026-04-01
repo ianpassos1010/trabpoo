@@ -14,21 +14,24 @@ import java.util.Scanner;
 
 public class AplicarProva {
 
-    private final List<Tentativa> tentativas;
+    private final List<Tentativa>    tentativas;
     private final List<Participante> participantes;
-    private final List<Prova> provas;
-    private final List<Questao> questoes;
-    private final long[] proximoId;
-    private final Scanner in;
+    private final List<Prova>        provas;
+    private final List<Questao>      questoes;
+    private final long[]             proximoId;
+    private final Scanner            in;
+    private final ICalcularNota      calculadorNota;
 
     public AplicarProva(List<Tentativa> tentativas, List<Participante> participantes,
-                        List<Prova> provas, List<Questao> questoes, long[] proximoId, Scanner in) {
-        this.tentativas = tentativas;
-        this.participantes = participantes;
-        this.provas = provas;
-        this.questoes = questoes;
-        this.proximoId = proximoId;
-        this.in = in;
+                        List<Prova> provas, List<Questao> questoes,
+                        long[] proximoId, Scanner in, ICalcularNota calculadorNota) {
+        this.tentativas     = tentativas;
+        this.participantes  = participantes;
+        this.provas         = provas;
+        this.questoes       = questoes;
+        this.proximoId      = proximoId;
+        this.in             = in;
+        this.calculadorNota = calculadorNota;
     }
 
     public void aplicarProva() {
@@ -93,7 +96,7 @@ public class AplicarProva {
 
         tentativas.add(tentativa);
 
-        int nota = new CalcularNota().calcularNota(tentativa);
+        int nota = calculadorNota.calcularNota(tentativa);
         System.out.println("\n--- Fim da Prova ---");
         System.out.println("Nota (acertos): " + nota + " / " + tentativa.getRespostas().size());
     }
