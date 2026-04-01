@@ -1,4 +1,4 @@
-# Refatoração SOLID - Sistema das Olimpíadas
+# Refatoração SOLID 
 
 Este é o meu trabalho de refatoração de POO avançado. O código original ficava todo dentro do `App.java`. O meu objetivo foi separar as responsabilidades aplicando os princípios SOLID, mantendo o sistema funcionando exatamente como antes, sem usar frameworks externos.
 
