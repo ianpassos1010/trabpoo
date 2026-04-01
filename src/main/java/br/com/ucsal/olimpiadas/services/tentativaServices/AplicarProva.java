@@ -12,7 +12,7 @@ import br.com.ucsal.olimpiadas.services.questaoServices.ImprimirTabuleiro;
 import java.util.List;
 import java.util.Scanner;
 
-public class AplicarProva {
+public class AplicarProva implements IAplicarProva {
 
     private final List<Tentativa>    tentativas;
     private final List<Participante> participantes;

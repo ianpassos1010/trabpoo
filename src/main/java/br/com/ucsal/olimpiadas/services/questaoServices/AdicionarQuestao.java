@@ -7,7 +7,7 @@ import br.com.ucsal.olimpiadas.services.provaServices.EscolherProva;
 import java.util.List;
 import java.util.Scanner;
 
-public class AdicionarQuestao {
+public class AdicionarQuestao implements IAdicionarQuestao {
 
     private final List<Questao> questoes;
     private final List<Prova> provas;

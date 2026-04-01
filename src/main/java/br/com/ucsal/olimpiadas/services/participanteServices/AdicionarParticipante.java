@@ -5,7 +5,7 @@ import br.com.ucsal.olimpiadas.Participante;
 import java.util.List;
 import java.util.Scanner;
 
-public class AdicionarParticipante {
+public class AdicionarParticipante implements IAdicionarParticipante {
 
     private final List<Participante> participantes;
     private final long[] proximoId;

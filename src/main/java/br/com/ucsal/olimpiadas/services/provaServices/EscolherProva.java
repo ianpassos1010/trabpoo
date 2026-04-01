@@ -5,7 +5,7 @@ import br.com.ucsal.olimpiadas.Prova;
 import java.util.List;
 import java.util.Scanner;
 
-public class EscolherProva {
+public class EscolherProva implements IEscolherProva {
 
     private final List<Prova> provas;
     private final Scanner in;

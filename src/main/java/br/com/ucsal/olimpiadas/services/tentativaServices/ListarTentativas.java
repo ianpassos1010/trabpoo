@@ -4,7 +4,7 @@ import br.com.ucsal.olimpiadas.Tentativa;
 
 import java.util.List;
 
-public class ListarTentativas {
+public class ListarTentativas implements IListarTentativas {
 
     private final List<Tentativa> tentativas;
     private final ICalcularNota   calculadorNota;

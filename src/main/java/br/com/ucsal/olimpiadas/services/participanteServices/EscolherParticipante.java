@@ -5,7 +5,7 @@ import br.com.ucsal.olimpiadas.Participante;
 import java.util.List;
 import java.util.Scanner;
 
-public class EscolherParticipante {
+public class EscolherParticipante implements IEscolherParticipante {
 
     private final List<Participante> participantes;
     private final Scanner in;

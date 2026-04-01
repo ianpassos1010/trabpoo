@@ -5,7 +5,7 @@ import br.com.ucsal.olimpiadas.Prova;
 import java.util.List;
 import java.util.Scanner;
 
-public class AdicionarProva {
+public class AdicionarProva implements IAdicionarProva {
 
     private final List<Prova> provas;
     private final long[] proximoId;
